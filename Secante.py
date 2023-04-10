@@ -5,7 +5,7 @@ from tabulate import tabulate
 def f(x):
     return (abs(x)**(x-1)-2.5*x-5); # función no lineal a evaluar
 
-def secant(f, p_0, p_1, tol, n):
+def secante(f, p_0, p_1, tol, n):
     e_abs = abs(p_1 - p_0);
     i = 2;
     resultados =[[0,p_0,f(p_0),""]]
@@ -32,4 +32,4 @@ def secant(f, p_0, p_1, tol, n):
     if i < n:
         print('Aproximación de la raíz encontrada en x = ', p_2);
 
-secant(f,-3,-2,10**-15,2);
+secante(f,-3,-2,10**-15,2);

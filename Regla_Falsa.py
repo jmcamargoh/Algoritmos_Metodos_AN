@@ -5,7 +5,7 @@ from tabulate import tabulate
 def f(x):
         return (-7*np.log(x)+x-13); # función no lineal a evaluar             
     
-def false_position(f,a,b,tol,n):
+def regla_falsa(f,a,b,tol,n):
     if f(a)*f(b)>=0:
         print("El intervalo no cambia de signo");
     resultados=[]
@@ -30,4 +30,4 @@ def false_position(f,a,b,tol,n):
         print("Solución no encontrada para la tolerancia de:" , tol,"--- Iteraciones Utilizadas:", i-1);
     print(tabulate(resultados, headers=["Iteraciones", "a", "b", "xm", "f(m)", "Error"], tablefmt="github", floatfmt=(".0f",".10f",".10f",".10f")))
 
-false_position(f,20,50,10**-5,10);   
+regla_falsa(f,20,50,10**-5,10);   
