@@ -3,13 +3,12 @@ from math import *
 import numpy as np
 from tabulate import tabulate
 
-def g(x):
-    return (math.sqrt((-math.e**-x)+5*x+20));  # evaluación
-
 
 def f1(x):
     return ((-math.e**-x)-x**2-5*x-20);    #función
 
+def g(x):
+    return (math.sqrt((-math.e**-x)+5*x+20));  # evaluación
 
 def punto_fijo(x0, tol, itermax):
     iter = 0
