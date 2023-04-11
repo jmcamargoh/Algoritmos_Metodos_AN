@@ -32,4 +32,4 @@ def newton(f, df, p_0, tol, n):
     print(tabulate(resultados, headers=["Iteraciones", "Xi", "f(xi)", "Error"], tablefmt="github", floatfmt=(".10f",".10f")))
 
 
-newton(f,df,-4.1,10**-5,100);
+newton(f,df,-4.1,0.5*10**-3,100);
