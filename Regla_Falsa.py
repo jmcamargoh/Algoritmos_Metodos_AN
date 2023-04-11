@@ -30,4 +30,4 @@ def regla_falsa(f,a,b,tol,n):
         print("Solución no encontrada para la tolerancia de:" , tol,"--- Iteraciones Utilizadas:", i-1);
     print(tabulate(resultados, headers=["Iteraciones", "a", "b", "xm", "f(m)", "Error"], tablefmt="github", floatfmt=(".0f",".10f",".10f",".10f")))
 
-regla_falsa(f,20,50,10**-5,10);   
+regla_falsa(f,20,50,0.5*10**-5,10);  
