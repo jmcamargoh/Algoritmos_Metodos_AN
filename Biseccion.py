@@ -1,9 +1,31 @@
+import re
 import numpy as np
 from math import *
 from tabulate import tabulate
 
+def reemplazar_funciones_matematicas(expr):
+    # Expresión regular para buscar nombres de funciones matemáticas y operadores matemáticos
+    pattern = r'\b(sin|cos|tan|sqrt|exp|log|log10)|(\*\*|\^|\+|\-|\*|\/)'
+    # Función para reemplazar cada nombre de función y operador matemático
+    def replace(match):
+        # Si es una función matemática, devuelve su versión con prefijo 'numpy.'
+        if match.group(1):
+            return f'np.{match.group(1)}'
+        # Si es el carácter '^', devuelve el operador '**'
+        elif match.group(2) == '^':
+            return '**'
+        # De lo contrario, devuelve el operador o carácter original
+        else:
+            return match.group(2)
+    # Reemplaza los nombres de funciones y operadores en la expresión por sus equivalentes
+    return re.sub(pattern, replace, expr)
+
+expr = 'log(sin(x)^2 + 1)-(1/2)'
+expr_with_numpy = reemplazar_funciones_matematicas(expr)   # Convertir función a string
+func = eval(f"lambda x: {expr_with_numpy}") # Convertir string a función
+
 def f(x):
-    return (x-np.cos(x));
+    return (func(x));
     
 def bisection(f,a,b,tol,n):
     resultados=[]
@@ -38,4 +60,4 @@ def bisection(f,a,b,tol,n):
         print("Solución no encontrada para la tolerancia:" , tol," Iteraciones Utilizadas", i-1);
     print(tabulate(resultados, headers=["Iteraciones", "a", "xm", "b", "f(xm)", "Error"], tablefmt="github", floatfmt=(".0f",".10f",".10f",".10f")))
             
-bisection(f,-10,10,10**-10,50);
+bisection(f,0,1,10**-7,100);
