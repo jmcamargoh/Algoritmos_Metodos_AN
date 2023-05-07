@@ -1,13 +1,37 @@
+import re
 import numpy as np
-import math
-from math import *
 from tabulate import tabulate
 
+def reemplazar_funciones_matematicas(expr):
+    # Expresión regular para buscar nombres de funciones matemáticas y operadores matemáticos
+    pattern = r'\b(sin|cos|tan|sqrt|exp|log|log10)|(\*\*|\^|\+|\-|\*|\/)'
+    # Función para reemplazar cada nombre de función y operador matemático
+    def replace(match):
+        # Si es una función matemática, devuelve su versión con prefijo 'numpy.'
+        if match.group(1):
+            return f'np.{match.group(1)}'
+        # Si es el carácter '^', devuelve el operador '**'
+        elif match.group(2) == '^':
+            return '**'
+        # De lo contrario, devuelve el operador o carácter original
+        else:
+            return match.group(2)
+    # Reemplaza los nombres de funciones y operadores en la expresión por sus equivalentes
+    return re.sub(pattern, replace, expr)
+
+exprf = 'log(sin(x)^2 + 1)-(1/2)'
+expr_with_numpy_f = reemplazar_funciones_matematicas(exprf)   # Convertir función a string
+funcf = eval(f"lambda x: {expr_with_numpy_f}") # Convertir string a función
+
+exprdf = '2*(1/(sin(x)^2 + 1))*(sin(x)*cos(x))'
+expr_with_numpy_df = reemplazar_funciones_matematicas(exprdf)   # Convertir función a string
+funcdf = eval(f"lambda x: {expr_with_numpy_df}") # Convertir string a función
 
 def f(x):
-    return (np.cos(x)*(math.e**-x)-13);
+    return (funcf(x));
+
 def df(x):
-    return ((math.e**-x)*(-np.sin(x)-np.cos(x)));
+    return (funcdf(x));
     
 def newton(f, df, p_0, tol, n):
     print("Iteración: ", 0, " En el punto inicial = ", p_0);
@@ -32,4 +56,4 @@ def newton(f, df, p_0, tol, n):
     print(tabulate(resultados, headers=["Iteraciones", "Xi", "f(xi)", "Error"], tablefmt="github", floatfmt=(".10f",".10f")))
 
 
-newton(f,df,-4.1,0.5*10**-3,100);
+newton(f,df,0.5,10**-7,100);
