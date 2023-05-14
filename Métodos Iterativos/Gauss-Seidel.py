@@ -35,7 +35,7 @@ def JacobiSeidel(A,b,x0,Tol,Niter,method):
 
     tabla.append([c] + list(x0) + [E]) 
     headers = ['Iteración'] + [f'x{i+1}' for i in range(len(x0))] + ['Error']
-    print(tabulate(tabla, headers=headers, floatfmt=".8f"))
+    print(tabulate(tabla, headers=headers, floatfmt=".8f", tablefmt="grid"))
     return (E,s)
 
 # Ejemplo de uso
