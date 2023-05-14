@@ -1,3 +1,6 @@
+# Para ejecutar el método de Jacobi se tiene que poner 0 en el parámetro METHOD
+# Para ejecutar el método de Gauss-Seidel se tiene que poner 1 en el parámetro METHOD
+
 import numpy as np
 from tabulate import tabulate
 
@@ -17,7 +20,7 @@ def JacobiSeidel(A,b,x0,Tol,Niter,method):
             T = np.linalg.inv(D-L)@U
             C = np.linalg.inv(D-L)@b
             x1 = T@x0+C
-        E = (np.linalg.norm(x1-x0, ord=np.inf))/(np.linalg.norm(x1, ord=np.inf)) # Con la división si se piden cifras significativas
+        E = (np.linalg.norm(x1-x0, ord=np.inf))/(np.linalg.norm(x1, ord=np.inf)) # Con la división si se piden cifras significativas, si no, se quita
         error = E
         tabla.append([c] + list(x0) + [E])
         x0 = x1
