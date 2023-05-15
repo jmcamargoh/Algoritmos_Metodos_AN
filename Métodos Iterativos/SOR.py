@@ -14,9 +14,13 @@ def sor_method(A,b,x0,Tol,Niter,w):
         x1 = T@x0+C
         E = (np.linalg.norm(x1-x0, ord=np.inf))
         error = E
-        tabla.append([c] + list(x0) + [E])
+        if c==0:
+            tabla.append([c] + list(x0) + [0])
+        else:
+            tabla.append([c] + list(x0) + [E_anterior])
         x0 = x1
         c += 1
+        E_anterior = E
     if error < Tol:
         s = x0
         print(f"La aproximación de la solución del sistema con una tolerancia = {Tol} es: ")
