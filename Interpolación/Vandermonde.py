@@ -1,10 +1,10 @@
 import numpy as np
 import sympy as sym
-from tabulate import tabulate
+import matplotlib.pyplot as plt    
 
 def vandermonde(x,y):
     Xi = np.array(x)
-    b = np.array(y)
+    B = np.array(y)
     n = len(x)
 
     vander = np.zeros(shape=(n,n), dtype=float)
@@ -14,7 +14,7 @@ def vandermonde(x,y):
             potencia = (n-1)-j
             vander[i,j] = Xi[i]**potencia
     
-    coeficiente = np.linalg.solve(vander, b)
+    coeficiente = np.linalg.solve(vander, B)
 
     x = sym.Symbol('x')
     polinomio = 0
@@ -23,6 +23,12 @@ def vandermonde(x,y):
         potencia = (n-1)-i
         multiplicador = coeficiente[i]*(x**potencia)
         polinomio = polinomio + multiplicador
+
+    px = sym.lambdify(x, polinomio)
+    a = np.min(Xi)
+    b = np.max(Xi)
+    xin = np.linspace(a,b)
+    yin = px(xin)
     
     print("Matriz de Vandermonde: ")
     print(vander)
@@ -32,6 +38,15 @@ def vandermonde(x,y):
     print("")
     print("Polinomio de Vandermonde: ")
     print(polinomio)
+    sym.pprint(polinomio) # Para "visualizar" la potencia
+
+    plt.plot(Xi,B,'o', label='[x,y]')
+    plt.plot(xin,yin, label='p(x)')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend()
+    plt.title(polinomio)
+    plt.show()
 
 x = [-1, 0, 3, 4]
 y = [15.5, 3, 8, 1]
