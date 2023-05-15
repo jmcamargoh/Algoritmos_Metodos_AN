@@ -4,6 +4,7 @@
 - Math
 - Tabulate
 - Sympy
+- Matplotlib
 #### Si tienen el pip instalado, el comando es el siguiente: pip install "nombre de la librería". Si no, pailas, busquen otra forma de bajarlas.
 
 ### Recomendaciones
