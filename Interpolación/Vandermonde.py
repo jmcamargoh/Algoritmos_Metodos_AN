@@ -38,14 +38,15 @@ def vandermonde(x,y):
     print("")
     print("Polinomio de Vandermonde: ")
     print(polinomio)
-    sym.pprint(polinomio) # Para "visualizar" la potencia
+    #sym.pprint(polinomio) # Para "visualizar" la potencia
 
     plt.plot(Xi,B,'o', label='[x,y]')
     plt.plot(xin,yin, label='p(x)')
     plt.xlabel('x')
     plt.ylabel('y')
     plt.legend()
-    plt.title(polinomio)
+    plt.title("Gráfico del Polinomio de Vandermonde")
+    plt.grid(True)
     plt.show()
 
 x = [-1, 0, 3, 4]
