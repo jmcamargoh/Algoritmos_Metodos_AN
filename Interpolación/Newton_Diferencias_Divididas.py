@@ -27,8 +27,16 @@ def diferencias_divididas(Xi,y):
                 else:
                     polinomio += "+" + str(tabla[i,j])
                 for i in range(0,i):
-                    polinomio += "(x - " + str(tabla[i,0]) + ")"
+                    polinomio += "*(x - " + str(tabla[i,0]) + ")"
 
+    polinomio_imprimir = polinomio.replace("- -", "+ ")        # Reemplaza en el str los - - por + (en la l+ogica matemática el programa lo entiende)
+
+    expr = sym.sympify(polinomio)   # De string a expresión
+    func = sym.lambdify(x,expr)    # De expresión a función
+    a = np.min(Xi)
+    b = np.max(Xi)
+    xin = np.linspace(a,b)
+    yin = func(xin)
 
     headers = ["X"] + ["Y"] + [f'{x+1}A' for x in range(n-1)]
     print("Tabla de Diferencias Divididas: ")
@@ -38,10 +46,19 @@ def diferencias_divididas(Xi,y):
     print(coeficientes)
     print("")
     print("Polinomio de Diferencias Divididas de Newton: ")
-    print(polinomio)
+    print(polinomio_imprimir)
+
+    plt.plot(Xi,y, 'o', label='[x,y]')      # Impresión de la gráfica
+    plt.plot(xin,yin, label='p(x)')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend()
+    plt.title("Gráfico de Diferencias Divididas de Newton")
+    plt.grid(True)
+    plt.show()
 
 
-x = [19, 22, 25, 31]
-y = [2.8, -1.3, 0.5, 3.8]
+x = [-1, 0, 3, 4]
+y = [15.5, 3, 8, 1]
 
 diferencias_divididas(x,y)
