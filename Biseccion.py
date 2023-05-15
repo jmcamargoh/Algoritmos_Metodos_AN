@@ -35,6 +35,7 @@ def bisection(f,a,b,tol,n):
     e_abs = abs(b-a);
     i = 1;
     while i <= n and e_abs > tol:
+        a_ant = a
         c = (a + b)/2;
         if f(c)==0:
             print("Solución encontrada en x=", c);
@@ -47,9 +48,9 @@ def bisection(f,a,b,tol,n):
             c_t = b;
         e_abs = abs(c_t - c);
         if(i!=1):
-            resultados.append([i,a,c,b,f(c),e_abs])
+            resultados.append([i,a_ant,c,b,f(c),e_abs])
         else:
-            resultados.append([i,a,c,b,f(c),""])
+            resultados.append([i,a_ant,c,b,f(c),""])
 
 
         if e_abs < tol:
