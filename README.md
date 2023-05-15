@@ -2,7 +2,8 @@
 ### Librerías a Descargar (Python)
 - Numpy
 - Math
-- Tabulate  
+- Tabulate
+- Sympy
 #### Si tienen el pip instalado, el comando es el siguiente: pip install "nombre de la librería". Si no, pailas, busquen otra forma de bajarlas.
 
 ### Recomendaciones
@@ -11,5 +12,6 @@ Tengan en cuenta la escritura a la hora de poner las funciones en el código:
   - cos(x) = np.cos(x)
   - e = np.exp(1)
   - e^x = np.exp(x)
+- **IMPORTANTE:** Ya existe el traductor de np a lenguaje natural, pero solo va a ser para implementarlo en la página.
 - **NOTA:** La tolerancia está definida por los decimales correctos que pide el ejercicio.
 - El resultado se visualiza en la consola.
