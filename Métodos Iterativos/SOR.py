@@ -23,6 +23,13 @@ def sor_method(A,b,x0,Tol,Niter,w):
         E_anterior = E
     if error < Tol:
         s = x0
+        eigenvalores = np.linalg.eigvals(T)
+        max_eig = np.max(np.abs(eigenvalores))
+        print("Matriz T: ")
+        print(T)
+        print("")
+        print(f"Eigenvalues: {max_eig}")
+        print("")
         print(f"La aproximación de la solución del sistema con una tolerancia = {Tol} es: ")
         print(s)
     else:
@@ -47,6 +54,6 @@ Tol = 1e-5
 
 Niter = 100
 
-w = 1.5
+w = 0.4
 
 sor_method(A, b, x0, Tol, Niter, w)
