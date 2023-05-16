@@ -17,12 +17,13 @@ def Spline(xi, fi, d):
             px = px + m*(x-xi[i-1])
             tabla_px.append(px)
 
+        print("Trazadores Lineales: ")
         for i in range(1,n,1):      # Salen al revés, para evitar todo el problema que tuve con Diferencias
             px = tabla_px[i-1]
             print(px)
         
         # Gráfica
-        graficar(n,tabla_px,xi,fi)
+        graficar(n,tabla_px,xi,fi, 1)
 
 
     # Cúbico
@@ -69,12 +70,15 @@ def Spline(xi, fi, d):
             ptramo = ptramo.expand()
             polinomio.append(ptramo)
 
+        print("Trazadores Cúbicos: ")
         for i in range(1,n,1):      # Trazadores
             px = polinomio[i-1]
             print(px)
 
+        graficar(n, polinomio, xi, fi, 3)
 
-def graficar(n, arreglo, xi, fi):
+
+def graficar(n, arreglo, xi, fi, grado):
     x = sym.Symbol('x')
     xcoordenadas = np.array([])
     ycoordenadas = np.array([])
@@ -93,7 +97,12 @@ def graficar(n, arreglo, xi, fi):
     plt.xlabel('x')
     plt.ylabel('y')
     plt.legend()
-    plt.title("Gráfico de Trazador Lineal")
+    if grado==1:
+        plt.title("Gráfico de Trazadores Lineales")
+    if grado==2:
+        plt.title("Gráfico de Trazadores Cuadráticos")
+    if grado==3:
+        plt.title("Gráfico de Trazadores Cúbicos")
     plt.grid(True)
     plt.show()
 
