@@ -7,6 +7,7 @@ def Spline(xi, fi, d):
     x = sym.Symbol('x')
     tabla_px = []
 
+    # Lineal
     if d==1:
         for i in range(1,n,1):
             numerador = fi[i]-fi[i-1]
@@ -21,34 +22,16 @@ def Spline(xi, fi, d):
             print(px)
         
         # Gráfica
-        xcoordenadas = np.array([])
-        ycoordenadas = np.array([])
-        for seccion in range(1,n,1):    # Recorre cada sección del trazador
-            a = xi[seccion-1]       # A y B para cada sección del trazador (si no se hace, quedan las fuciones completas e infinitas)
-            b = xi[seccion]
-            xseccion = np.linspace(a,b)     # Puntos equiespaciados entre a y b
-            pxseccion = tabla_px[seccion-1]     # La función actual del trazador (en esa sección)
-            pxt = sym.lambdify(x,pxseccion)     # Convertir a función
-            yseccion = pxt(xseccion)            # Evaluación en Y
-            xcoordenadas = np.concatenate((xcoordenadas,xseccion))      # Se agregan los puntos anteriores a los arreglos de las coordenadas para que el programa grafique
-            ycoordenadas = np.concatenate((ycoordenadas,yseccion))
+        graficar(n,tabla_px,xi,fi)
 
-        plt.plot(xi,fi, 'ro', label='puntos')
-        plt.plot(xcoordenadas,ycoordenadas, label='trazador')
-        plt.xlabel('x')
-        plt.ylabel('y')
-        plt.legend()
-        plt.title("Gráfico de Trazador Lineal")
-        plt.grid(True)
-        plt.show()
 
+    # Cúbico
     if d==3:
         h = np.zeros(n-1, dtype = float)
         for j in range(0,n-1,1):
             h[j] = xi[j+1] - xi[j]
     
-        # Sistema de ecuaciones
-        A = np.zeros(shape=(n-2,n-2), dtype = float)
+        A = np.zeros(shape=(n-2,n-2), dtype = float)        # Sistema de Ecuaciones
         B = np.zeros(n-2, dtype = float)
         S = np.zeros(n, dtype = float)
         A[0,0] = 2*(h[0]+h[1])
@@ -63,16 +46,13 @@ def Spline(xi, fi, d):
         A[n-3,n-3] = 2*(h[n-3]+h[n-2])
         B[n-3] = 6*((fi[n-1]-fi[n-2])/h[n-2] - (fi[n-2]-fi[n-3])/h[n-3])
     
-        # Resolver sistema de ecuaciones
-        r = np.linalg.solve(A,B)
-        # S
+        r = np.linalg.solve(A,B)        # Resolver sistema de ecuaciones
         for j in range(1,n-1,1):
             S[j] = r[j-1]
         S[0] = 0
         S[n-1] = 0
     
-        # Coeficientes
-        a = np.zeros(n-1, dtype = float)
+        a = np.zeros(n-1, dtype = float)        # Coeficientes
         b = np.zeros(n-1, dtype = float)
         c = np.zeros(n-1, dtype = float)
         d = np.zeros(n-1, dtype = float)
@@ -82,15 +62,40 @@ def Spline(xi, fi, d):
             c[j] = (fi[j+1]-fi[j])/h[j] - (2*h[j]*S[j]+h[j]*S[j+1])/6
             d[j] = fi[j]
     
-        # Polinomio trazador
-        x = sym.Symbol('x')
+        x = sym.Symbol('x')                 # Polinomio trazador
         polinomio = []
         for j in range(0,n-1,1):
             ptramo = a[j]*(x-xi[j])**3 + b[j]*(x-xi[j])**2 + c[j]*(x-xi[j])+ d[j]
             ptramo = ptramo.expand()
             polinomio.append(ptramo)
-    
-        print(polinomio)
+
+        for i in range(1,n,1):      # Trazadores
+            px = polinomio[i-1]
+            print(px)
+
+
+def graficar(n, arreglo, xi, fi):
+    x = sym.Symbol('x')
+    xcoordenadas = np.array([])
+    ycoordenadas = np.array([])
+    for seccion in range(1,n,1):    # Recorre cada sección del trazador
+        a = xi[seccion-1]       # A y B para cada sección del trazador (si no se hace, quedan las fuciones completas e infinitas)
+        b = xi[seccion]
+        xseccion = np.linspace(a,b)     # Puntos equiespaciados entre a y b
+        pxseccion = arreglo[seccion-1]     # La función actual del trazador (en esa sección)
+        pxt = sym.lambdify(x,pxseccion)     # Convertir a función
+        yseccion = pxt(xseccion)            # Evaluación en Y
+        xcoordenadas = np.concatenate((xcoordenadas,xseccion))      # Se agregan los puntos anteriores a los arreglos de las coordenadas para que el programa grafique
+        ycoordenadas = np.concatenate((ycoordenadas,yseccion))
+
+    plt.plot(xi,fi, 'ro', label='puntos')
+    plt.plot(xcoordenadas,ycoordenadas, label='trazador')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend()
+    plt.title("Gráfico de Trazador Lineal")
+    plt.grid(True)
+    plt.show()
 
 
 x = [-2, -1, 2, 3]
