@@ -42,8 +42,58 @@ def Spline(xi, fi, d):
         plt.grid(True)
         plt.show()
 
+    if d==3:
+        h = np.zeros(n-1, dtype = float)
+        for j in range(0,n-1,1):
+            h[j] = xi[j+1] - xi[j]
+    
+        # Sistema de ecuaciones
+        A = np.zeros(shape=(n-2,n-2), dtype = float)
+        B = np.zeros(n-2, dtype = float)
+        S = np.zeros(n, dtype = float)
+        A[0,0] = 2*(h[0]+h[1])
+        A[0,1] = h[1]
+        B[0] = 6*((fi[2]-fi[1])/h[1] - (fi[1]-fi[0])/h[0])
+        for i in range(1,n-3,1):
+            A[i,i-1] = h[i]
+            A[i,i] = 2*(h[i]+h[i+1])
+            A[i,i+1] = h[i+1]
+            B[i] = 6*((fi[i+2]-fi[i+1])/h[i+1] - (fi[i+1]-fi[i])/h[i])
+        A[n-3,n-4] = h[n-3]
+        A[n-3,n-3] = 2*(h[n-3]+h[n-2])
+        B[n-3] = 6*((fi[n-1]-fi[n-2])/h[n-2] - (fi[n-2]-fi[n-3])/h[n-3])
+    
+        # Resolver sistema de ecuaciones
+        r = np.linalg.solve(A,B)
+        # S
+        for j in range(1,n-1,1):
+            S[j] = r[j-1]
+        S[0] = 0
+        S[n-1] = 0
+    
+        # Coeficientes
+        a = np.zeros(n-1, dtype = float)
+        b = np.zeros(n-1, dtype = float)
+        c = np.zeros(n-1, dtype = float)
+        d = np.zeros(n-1, dtype = float)
+        for j in range(0,n-1,1):
+            a[j] = (S[j+1]-S[j])/(6*h[j])
+            b[j] = S[j]/2
+            c[j] = (fi[j+1]-fi[j])/h[j] - (2*h[j]*S[j]+h[j]*S[j+1])/6
+            d[j] = fi[j]
+    
+        # Polinomio trazador
+        x = sym.Symbol('x')
+        polinomio = []
+        for j in range(0,n-1,1):
+            ptramo = a[j]*(x-xi[j])**3 + b[j]*(x-xi[j])**2 + c[j]*(x-xi[j])+ d[j]
+            ptramo = ptramo.expand()
+            polinomio.append(ptramo)
+    
+        print(polinomio)
+
 
 x = [-2, -1, 2, 3]
 y = [12.1353, 6.3678, -4.6109, 2.08553]
 
-Spline(x,y,1)
+Spline(x,y,3)
