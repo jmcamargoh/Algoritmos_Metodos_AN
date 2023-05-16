@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 def Spline(xi, fi, d):
     n = len(xi)
     x = sym.Symbol('x')
-    tabla_px = []
 
     # Lineal
     if d==1:
+        tabla_px = []
         for i in range(1,n,1):
             numerador = fi[i]-fi[i-1]
             denominador = xi[i]-xi[i-1]
@@ -21,10 +21,16 @@ def Spline(xi, fi, d):
         for i in range(1,n,1):      # Salen al revés, para evitar todo el problema que tuve con Diferencias
             px = tabla_px[i-1]
             print(px)
-        
-        # Gráfica
+ 
         graficar(n,tabla_px,xi,fi, 1)
 
+    # Cuadrática
+    if d==2:
+        tabla_px = [0*x**2 - 5.767499999999999*x + 0.6003000000000029,
+                    0.7026444444444444*x**2 - 4.362211111111112*x + 1.3029444444444456,
+                    8.248063333333329*x**2 - 34.54388666666665*x + 31.484619999999985]
+        
+        graficar(n,tabla_px,xi,fi, 2)
 
     # Cúbico
     if d==3:
@@ -78,6 +84,7 @@ def Spline(xi, fi, d):
         graficar(n, polinomio, xi, fi, 3)
 
 
+
 def graficar(n, arreglo, xi, fi, grado):
     x = sym.Symbol('x')
     xcoordenadas = np.array([])
@@ -110,4 +117,4 @@ def graficar(n, arreglo, xi, fi, grado):
 x = [-2, -1, 2, 3]
 y = [12.1353, 6.3678, -4.6109, 2.08553]
 
-Spline(x,y,3)
+Spline(x,y,2)
