@@ -36,8 +36,8 @@ def secante(f, p_0, p_1, tol, n):
             print('solution not found (error in the initial values)');
             break;
         
-        p_2 = p_0 - (f(p_0)*(p_1 - p_0))/(f(p_1) - f(p_0)); # fórmula del método de la secante
-        e_abs = abs(p_2- p_1);
+        p_2 = p_1 - ((f(p_1)*(p_1 - p_0))/(f(p_1) - f(p_0))); # fórmula del método de la secante
+        e_abs = abs(p_1 - p_2);
         resultados.append([i,p_2,f(p_2),e_abs]) 
         
         if e_abs < tol: # condición de parada
