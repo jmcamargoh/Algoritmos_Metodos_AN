@@ -70,7 +70,7 @@ def bisection(f,a,b,tol,n):
     plt.axvline(0, color='black', linestyle='-', linewidth=1)
     plt.xlabel("x")
     plt.ylabel("f(x)")
-    plt.title(f"Gráfico de la Función {expr}")
+    plt.title(f"Gráfico de la Función: {expr}")
     plt.grid(True)
     plt.show()
             
