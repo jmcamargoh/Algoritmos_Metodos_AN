@@ -1,5 +1,6 @@
 import re
 import numpy as np
+import matplotlib.pyplot as plt
 from math import *
 from tabulate import tabulate
 
@@ -60,5 +61,17 @@ def bisection(f,a,b,tol,n):
     if i > n:
         print("Solución no encontrada para la tolerancia:" , tol," Iteraciones Utilizadas", i-1);
     print(tabulate(resultados, headers=["Iteraciones", "a", "xm", "b", "f(xm)", "Error"], tablefmt="github", floatfmt=(".0f",".10f",".10f",".10f")))
+
+    x = np.linspace(-10, 10, 1000)
+    y = f(x)
+
+    plt.plot(x,y, color='red')
+    plt.axhline(0, color='black', linestyle='-', linewidth=1)
+    plt.axvline(0, color='black', linestyle='-', linewidth=1)
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.title(f"Gráfico de la Función {expr}")
+    plt.grid(True)
+    plt.show()
             
 bisection(f,0,1,10**-7,100);
