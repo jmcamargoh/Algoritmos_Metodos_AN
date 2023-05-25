@@ -1,5 +1,6 @@
 import re
 import numpy as np
+import matplotlib.pyplot as plt
 from tabulate import tabulate
 
 def reemplazar_funciones_matematicas(expr):
@@ -48,5 +49,20 @@ def punto_fijo(x0, tol, itermax):
         print("Solución no encontrada, iteraciones utilizadas: ", iter)
 
     print(tabulate(resultados, headers=["Iteraciones", "Xi", "g(xi)", "f(x)", "Error"], tablefmt="github", floatfmt=(".10f",".10f",".10f")))
+
+    x = np.linspace(-10, 10, 1000)
+    y = f1(x)
+    evaluacion = g(x)
+
+    plt.plot(x,y, color='red', label='Función')
+    plt.plot(x,evaluacion, color='blue', label='g(x)')
+    plt.axhline(0, color='black', linestyle='-', linewidth=1)
+    plt.axvline(0, color='black', linestyle='-', linewidth=1)
+    plt.xlabel("x")
+    plt.ylabel("f(x)/g(x)")
+    plt.title(f"Gráfico de la Función: {exprf} y su la g(x) escogida: {exprg}")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 punto_fijo(-0.5, 10**-7, 100)
