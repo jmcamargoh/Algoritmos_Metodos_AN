@@ -65,12 +65,13 @@ def bisection(f,a,b,tol,n):
     x = np.linspace(-10, 10, 1000)
     y = f(x)
 
-    plt.plot(x,y, color='red')
+    plt.plot(x,y, color='red', label='Función')
     plt.axhline(0, color='black', linestyle='-', linewidth=1)
     plt.axvline(0, color='black', linestyle='-', linewidth=1)
     plt.xlabel("x")
     plt.ylabel("f(x)")
     plt.title(f"Gráfico de la Función: {expr}")
+    plt.legend()
     plt.grid(True)
     plt.show()
             
