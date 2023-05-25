@@ -1,5 +1,6 @@
 import re
 import numpy as np
+import matplotlib.pyplot as plt
 from tabulate import tabulate
 
 def reemplazar_funciones_matematicas(expr):
@@ -52,5 +53,18 @@ def secante(f, p_0, p_1, tol, n):
     print(tabulate(resultados, headers=["Iteraciones", "Xi", "f(xi)", "Error"], tablefmt="github",floatfmt=(".10f",".10f")))
     if i < n:
         print('Aproximación de la raíz encontrada en x = ', p_2);
+
+    x = np.linspace(-10, 10, 1000)
+    y = f(x)
+
+    plt.plot(x,y, color='red', label='Función')
+    plt.axhline(0, color='black', linestyle='-', linewidth=1)
+    plt.axvline(0, color='black', linestyle='-', linewidth=1)
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.title(f"Gráfico de la Función: {expr}")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 secante(f,0.5,1,10**-7,100);
