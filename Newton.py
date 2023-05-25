@@ -1,5 +1,6 @@
 import re
 import numpy as np
+import matplotlib.pyplot as plt
 from tabulate import tabulate
 
 def reemplazar_funciones_matematicas(expr):
@@ -54,6 +55,20 @@ def newton(f, df, p_0, tol, n):
     if i > n:
         print("Solución no encontrada para la tolerancia:" , tol,"Iteraciones Utilizadas:", i-1);
     print(tabulate(resultados, headers=["Iteraciones", "Xi", "f(xi)", "Error"], tablefmt="github", floatfmt=(".10f",".10f")))
+    
+    x = np.linspace(-10, 10, 1000)
+    y = f(x)
+    dy = df(x)
 
+    plt.plot(x,y, color='red', label='Función')
+    plt.plot(x,dy, color='blue', label='Derivada')
+    plt.axhline(0, color='black', linestyle='-', linewidth=1)
+    plt.axvline(0, color='black', linestyle='-', linewidth=1)
+    plt.xlabel("x")
+    plt.ylabel("f(x)/f'(x)")
+    plt.title(f"Gráfico de la Función: {exprf} y su Derivada: {exprdf}")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 newton(f,df,0.5,10**-7,100);
