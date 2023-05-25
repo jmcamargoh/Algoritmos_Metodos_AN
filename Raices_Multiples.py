@@ -1,5 +1,6 @@
 import re
 import numpy as np
+import matplotlib.pyplot as plt
 from tabulate import tabulate
 
 def reemplazar_funciones_matematicas(expr):
@@ -63,5 +64,22 @@ def raices_multiples(f,df,d2f,x0,tol,n):
   if iteration > n:
     print("Solution not found for tolerance = ", tol);
   print(tabulate(resultados, headers=["Iteraciones", "Xi", "f(x)", "Error"], tablefmt="github"))
+
+  x = np.linspace(-10, 3, 1000)
+  y = f(x)
+  dy = df(x)
+  d2y = d2f(x)
+
+  plt.plot(x,y, color='red', label='Función')
+  plt.plot(x,dy, color='blue', label='Derivada')
+  plt.plot(x,d2y, color='green', label='2da Derivada')
+  plt.axhline(0, color='black', linestyle='-', linewidth=1)
+  plt.axvline(0, color='black', linestyle='-', linewidth=1)
+  plt.xlabel("x")
+  plt.ylabel("f(x)/f'(x)/f''(x)")
+  plt.title(f"Gráfico de la Función: {exprf}, su Derivada: {exprdf} y su 2da Derivada: {exprd2f}")
+  plt.legend()
+  plt.grid(True)
+  plt.show()
 
 raices_multiples(f,df,d2f,1,10**-7,100);
