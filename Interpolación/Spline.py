@@ -13,7 +13,7 @@ def Spline(xi, fi, d):
             numerador = fi[i]-fi[i-1]
             denominador = xi[i]-xi[i-1]
             m = numerador/denominador
-            px = y[i-1]
+            px = fi[i-1]
             px = px + m*(x-xi[i-1])
             tabla_px.append(px)
 
@@ -114,7 +114,7 @@ def graficar(n, arreglo, xi, fi, grado):
     plt.show()
 
 
-x = [-2, -1, 2, 3]
-y = [12.1353, 6.3678, -4.6109, 2.08553]
+x = [0, 2, 4]
+y = [3, 5, 1]
 
-Spline(x,y,2)
+Spline(x,y,1)
