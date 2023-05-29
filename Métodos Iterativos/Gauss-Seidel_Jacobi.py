@@ -20,7 +20,7 @@ def JacobiSeidel(A,b,x0,Tol,Niter,method):
             T = np.linalg.inv(D-L)@U
             C = np.linalg.inv(D-L)@b
             x1 = T@x0+C
-        E = (np.linalg.norm(x1-x0, ord=np.inf))/(np.linalg.norm(x1, ord=np.inf)) # Con la división si se piden cifras significativas, si no, se quita
+        E = (np.linalg.norm(x1-x0, ord=np.inf)) # Con la división si se piden cifras significativas, si no, se quita
         error = E
         if c==0:
             tabla.append([c] + list(x0) + [0])
@@ -58,7 +58,7 @@ b = np.array([10, 10, 10])
 
 x0 = np.array([1, 1, 1])
 
-Tol = 5e-5
+Tol = 1e-5
 
 Niter = 100
 
